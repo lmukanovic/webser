@@ -1,8 +1,8 @@
 
 terraform {
  backend "gcs" {
-   project = "comp698-[username]"
-   bucket  = "comp698-[username]-terraform-state"
+   project = "comp698-lm2020"
+   bucket  = "comp698-lm2020-terraform-state"
    prefix  = "terraform-state"
  }
 }
