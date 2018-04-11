@@ -14,9 +14,9 @@ provider "google" {
 
 //instances
 resource "google_compute_instance_template" "webser"{
-        name = "terraform-webserver"
+        name = "terraform-webserver-"
 
-        }
+        
 
         
         machine_type         = "f1-mico"
@@ -26,14 +26,14 @@ resource "google_compute_instance_template" "webser"{
         }
 
 
-  	network_interface {
- 	network = "default"
-  }
 
-       
+        network_interface {
+        network = "default"
+        }     
 }
+
 resource "google_compute_instance_group_manager" instance_group_manager" 	{
-name               = "instance-group-manager"
+name               = "instance-group-manager-1"
 instance_template  = "${google_compute_instance_template instance_template.self_link}"
 base_instance_name = "instance-group-manager"
 zone               = "us-central1-f"
