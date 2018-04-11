@@ -1,39 +1,24 @@
-
-terraform {
- backend "gcs" {
-   project = "comp698-lm2020"
-   bucket  = "comp698-lm2020-terraform-state"
-   prefix  = "terraform-state"
- }
-}
 provider "google" {
-  credentials = ""
-  project     = "comp698-lm2020"
-  region = "us-central1"
+  credentials = "${file("account.json")}"
+  project     = "my-gce-project-id"
+  region      = "us-central1"
 }
-//instances
-resource "google_compute_instance" "webser"{
-	name = "terraform-webservers"
-	description = "Terraform test instance group-1"
-	machine_type = " "
-	zone = "us-central1"
 
-	
+// Create a new instance
+resource "google_compute_instance_template" "webser" {
+	name = "${var.name}-webser-instance-template"
+	machine_type = "${var.instance_type} "
+	zone = "${var.region}"
+
+
+	disk{
+		image = "${var.image}"
+	}
 
 	network_interface {
-	network = "default"
-	access_config {
-		//104.197.78.154 ?Empheral IP
-    	}
-	}
-
-	count = 1 
-	lifecyle = {
-		create_before_destroy = true
-	}
-
-	instances = [
-    "${google_compute_instance.test.self_link}",
-    
-  ]
+    	network = "${var.network_name}"
+    	access_config {
+      		# Ephemeral IP - leaving this block empty will generate a new external IP and assign it to the machine
+    }
+  }
 }
