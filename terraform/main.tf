@@ -7,7 +7,6 @@ backend "gcs" {
 }
 
 provider "google" {
-  project     = "comp698-lm2020"
   region = "us-central1"
 }
 
@@ -15,9 +14,7 @@ provider "google" {
 //instances
 resource "google_compute_instance_template" "terraform-webserver"{
         name = "terraform-webserver"
-
-        
-
+        project     = "comp698-lm2020"
         
         
 
@@ -34,7 +31,7 @@ resource "google_compute_instance_template" "terraform-webserver"{
 }
 
 resource "google_compute_instance_group_manager" "instance_group_manager" {
-name               = "instance-group-manager-1"
+name               = "instance-group-manager"
 instance_template  = "${google_compute_instance_template.terraform-webserver.self_link}"
 base_instance_name = "instance-group-manager"
 zone               = "us-central1-f"
