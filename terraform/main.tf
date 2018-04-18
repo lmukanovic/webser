@@ -37,3 +37,10 @@ base_instance_name = "instance-group-manager"
 zone               = "us-central1-f"
 target_size        = "1"
 }
+
+
+resource "google_storage_bucket" "image-store" {
+  project  = "comp698-lm2020"
+  name     = "Lamia-automation"
+  location = "us-central1"
+}
