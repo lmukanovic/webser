@@ -30,10 +30,10 @@ resource "google_compute_instance_template" "terraform-webserver"{
         }     
 }
 
-resource "google_compute_instance_group_manager" "instance_group_manager" {
+resource "google_compute_instance_group_manager" "default" {
 name               = "instance-group-manager"
 instance_template  = "${google_compute_instance_template.terraform-webserver.self_link}"
-base_instance_name = "instance-group-manager"
+base_instance_name = "app"
 zone               = "us-central1-f"
 target_size        = "1"
 }
@@ -41,6 +41,6 @@ target_size        = "1"
 
 resource "google_storage_bucket" "image-store" {
   project  = "comp698-lm2020"
-  name     = "Lamia-automation"
+  name     = "Lamiaisfrombosnia"
   location = "us-central1"
 }
