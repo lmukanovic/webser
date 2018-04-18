@@ -7,40 +7,38 @@ backend "gcs" {
 }
 
 provider "google" {
+  project = "comp698-lm2020"
   region = "us-central1"
 }
 
 
 //instances
 resource "google_compute_instance_template" "terraform-webserver"{
-        name = "terraform-webserver"
-        project     = "comp698-lm2020"
+  name = "terraform-webserver"
+  project     = "comp698-lm2020"
+    
+  disk {
+  source_image = "cos-cloud/cos-stable"
+  }
         
-        
-
-        disk {
-        source_image = "cos-cloud/cos-stable"
-        }
-        
-        machine_type         = "f1-mico"
-
-
-        network_interface {
-        network = "default"
-        }     
+  machine_type         = "f1-mico"
+    network_interface {
+    network = "default"
+  }     
 }
 
 resource "google_compute_instance_group_manager" "default" {
-name               = "instance-group-manager"
+name               = "tf-lm-webser-manager"
+project = "comp698-lm2020"
 instance_template  = "${google_compute_instance_template.terraform-webserver.self_link}"
 base_instance_name = "app"
 zone               = "us-central1-f"
-target_size        = "1"
+target_size        = "2"
 }
 
 
 resource "google_storage_bucket" "image-store" {
   project  = "comp698-lm2020"
-  name     = "Lamiaisfrombosnia"
+  name     = "Lmukanovicisfrombugojnobosnia"
   location = "us-central1"
 }
