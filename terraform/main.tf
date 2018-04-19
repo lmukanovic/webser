@@ -21,7 +21,7 @@ resource "google_compute_instance_template" "terraform-webserver"{
   source_image = "cos-cloud/cos-stable"
   }
         
-  machine_type         = "f1-mico"
+  machine_type         = "n1-standard-1"
     network_interface {
     network = "default"
   }     
@@ -39,6 +39,6 @@ target_size        = "2"
 
 resource "google_storage_bucket" "image-store" {
   project  = "comp698-lm2020"
-  name     = "Lmukanovicisfrombugojnobosnia"
+  name     = "lmukanovicisfrombugojnobosnia"
   location = "us-central1"
 }
