@@ -16,6 +16,19 @@ provider "google" {
 resource "google_compute_instance_template" "terraform-webserver"{
   name = "terraform-webserver"
   project     = "comp698-lm2020"
+
+  metadata {
+    gce-container-declaration = <<EOF
+spec:
+  containers:
+    - image: 'gcr.io/comp698-lm2020/github-lmukanovic-webser:9b34b174c28bf886eb50948c53d42b290e9ea8e3'
+      name: service-container
+      stdin: false
+      tty: false
+  restartPolicy: Always
+EOF
+  }
+
     
   disk {
   source_image = "cos-cloud/cos-stable"
