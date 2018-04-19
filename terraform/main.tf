@@ -28,7 +28,8 @@ spec:
   restartPolicy: Always
 EOF
   }
-
+  
+  tags = ["http-server"]  
     
   disk {
   source_image = "cos-cloud/cos-stable"
@@ -37,7 +38,11 @@ EOF
   machine_type         = "n1-standard-1"
     network_interface {
     network = "default"
-  }     
+    access_config {
+    }
+  } 
+
+
 }
 
 resource "google_compute_instance_group_manager" "default" {
