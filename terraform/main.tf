@@ -66,7 +66,8 @@ resource "google_compute_instance_template" "terraform-webserver2"{
     gce-container-declaration = <<EOF
   spec:
     containers:
-    - image: 'gcr.io/comp698-lm2020/github-lmukanovic-webser:12c6131e8b3d4eb51d00e9a1a4cb95ede47c1535'
+    - image: 'gcr.io/comp698-lm2020/github-lmukanovic-webser:18cbab7bc4048a492c3c37a0c5a49618735fa381'
+    //container registry,build history,get the latest image
       name: service-container
       stdin: false
       tty: false
