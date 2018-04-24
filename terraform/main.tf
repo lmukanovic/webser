@@ -67,7 +67,6 @@ resource "google_compute_instance_template" "terraform-webserver2"{
   spec:
     containers:
     - image: 'gcr.io/comp698-lm2020/github-lmukanovic-webser:18cbab7bc4048a492c3c37a0c5a49618735fa381'
-    //container registry,build history,get the latest image
       name: service-container
       stdin: false
       tty: false
