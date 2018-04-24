@@ -19,8 +19,8 @@ resource "google_compute_instance_template" "terraform-webserver"{
 
   metadata {
     gce-container-declaration = <<EOF
-spec:
-  containers:
+  spec:
+    containers:
     - image: 'gcr.io/comp698-lm2020/github-lmukanovic-webser:9b34b174c28bf886eb50948c53d42b290e9ea8e3'
       name: service-container
       stdin: false
@@ -41,6 +41,50 @@ EOF
     ]
   }
 
+    
+  disk {
+  source_image = "cos-cloud/cos-stable"
+  }
+        
+  machine_type         = "n1-standard-1"
+    network_interface {
+    network = "default"
+    access_config {
+    }
+  } 
+
+
+}
+
+
+
+resource "google_compute_instance_template" "terraform-webserver2"{
+  name = "terraform-webserver2"
+  project     = "comp698-lm2020"
+
+  metadata {
+    gce-container-declaration = <<EOF
+  spec:
+    containers:
+    - image: 'gcr.io/comp698-lm2020/github-lmukanovic-webser:12c6131e8b3d4eb51d00e9a1a4cb95ede47c1535'
+      name: service-container
+      stdin: false
+      tty: false
+  restartPolicy: Always
+EOF
+  }
+  
+  tags = ["http-server"]  
+
+  
+
+    service_account {
+    scopes = [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/devstorage.read_write",
+    ]
+  }
 
     
   disk {
@@ -61,11 +105,20 @@ resource "google_compute_instance_group_manager" "default" {
 name               = "tf-lm-webser-manager"
 project = "comp698-lm2020"
 instance_template  = "${google_compute_instance_template.terraform-webserver.self_link}"
-base_instance_name = "app"
+base_instance_name = "prod"
 zone               = "us-central1-f"
 target_size        = "2"
 }
 
+
+resource "google_compute_instance_group_manager" "default2" {
+name               = "tf-lm-webser-manager2"
+project = "comp698-lm2020"
+instance_template  = "${google_compute_instance_template.terraform-webserver2.self_link}"
+base_instance_name = "staging"
+zone               = "us-central1-f"
+target_size        = "1"
+}
 
 resource "google_storage_bucket" "image-store" {
   project  = "comp698-lm2020"
